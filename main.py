@@ -4,15 +4,6 @@ from fastapi import FastAPI
 
 import pandas as pd
 import numpy as np
-# from sklearn.linear_model import LinearRegression
-# from sklearn.metrics import r2_score
-# from sklearn.metrics import mean_squared_error
-# from sklearn.cluster import AgglomerativeClustering
-# from sklearn.decomposition import PCA
-# from sklearn.preprocessing import StandardScaler
-# from sklearn.metrics.pairwise import euclidean_distances
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 import string
 import ast
 import random
@@ -52,11 +43,6 @@ user_item_genre = pd.read_csv(url, sep = "|", encoding = "utf-8")
 # aust_user_item_df = pd.read_csv(filepath + "aust_user_item_df.csv", sep = "|", encoding = "utf-8")
 genres_list = list(aust_user_item_df.columns)[9:]
 
-# reviews_posts = pd.read_csv(filepath + "reviews_posts.csv", sep = "|", encoding = "utf-8")
-# game_info = pd.read_csv(filepath + "game_info.csv", sep = "|", encoding = "utf-8")
-# games_cluster = pd.read_csv(filepath + "games_cluster.csv", sep = "|", encoding = "utf-8")
-# user_genre_mat_norm = pd.read_csv(filepath + "user_genre_mat_norm.csv", sep = "|", encoding = "utf-8")
-# user_item_genre = pd.read_csv(filepath + "user_item_genre.csv", sep = "|", encoding = "utf-8")
 
 app = FastAPI()
 
@@ -260,68 +246,3 @@ def recomendacion_juego(game_id: int):
     game_recom_lst.insert(0, recommended_game)
     
     return {'Dado el juego ' + str(game_id) + ', recomendamos los siguientes: ' + str(list(game_recom_lst)[0])}
-
-# ---------------- Endpoint Nº 7 ---------------------------------------------------------------------
-@app.get("/recomendacion_usuario/{id_usuario}")
-def recomendacion_usuario(id_usuario: str):
-    # -*- coding: utf-8 -*-
-    """
-    Given an user id, recommend a list of 5 games for this particular user
-    """
-
-    if id_usuario not in user_genre_mat_norm['user_id'].unique():
-        return {'El usuario ingresado no se corresponde con uno activo en steam'}
-
-    # get list of genres (features)
-    features = list(user_genre_mat_norm.columns)[2:]
-    # y(x) --> user_id as a normalized vector of genre's components
-    x = user_genre_mat_norm.loc[:, features].values
-    y = user_genre_mat_norm.loc[:, ['user_id']].values
-
-    # getting the input id
-    user_id_to_recommend = id_usuario
-    # looking for the row index of this particular user inside 'user_genre_mat_norm'
-    user_index = user_genre_mat_norm.index[user_genre_mat_norm['user_id'] == user_id_to_recommend].tolist()
-    # and using this row index to extract the user's normalized vector components (user(genre) coefficients)
-    user_to_rec_features = x[user_index]
-
-    # calculate the distances of every user with the one entered.
-    # choosen euclidean instead of cosine distances because later one works better when components derived from text analysis are being compared and here are purely numeric
-    distance_to_user = np.linalg.norm(x - user_to_rec_features)
-    # and make a dataframe with users distances to the current one
-    final_df = pd.DataFrame(y, columns = ['user_id'])
-    final_df['distance_to_curr_user'] = distance_to_user
-
-    # obtaining a list of the top 5 closest users to the current one
-    user_simm_top5 = final_df.sort_values('distance_to_curr_user').head(6)
-    user_simm_top5 = user_simm_top5.iloc[1:, :]
-    # and choosing the closest one of all
-    most_simm_user = user_simm_top5.iloc[0,0]
-
-    # lets get which games the current user owns
-    condition = user_item_genre['user_id'] == user_id_to_recommend
-    user_to_recommend = user_item_genre.loc[condition, :]       # dataframe with the info of the current user
-    user_owned_games = list(user_to_recommend['items_item_id']) # extract the list of current user owned games
-
-    # and now which games the closest user to the current one has
-    condition = user_item_genre['user_id'] == most_simm_user 
-    simm_user = user_item_genre.loc[condition, :]               # dataframe with the info of the closest user to the current one (i.e. the one that the recommendation is going to be extracted from)
-    # and keeping only the columns of interest sorted by most played games
-    games_simm_user = simm_user[['items_item_id', 'items_item_name', 'items_playtime_forever']]
-    # to get the list of games owned by the simmilar user, ordered by most played games first
-    simm_user_games_list = list(games_simm_user.sort_values('items_playtime_forever', ascending = False)['items_item_id'])
-
-    # and finally, loop over the simmilar user game list going from the most played to the lest, looking for the first game that isn't already owned by current user
-    game_recommended = -1                                       # a -1 value acts as a flag for 'couldn't find a game in simmilar user that isn't already owned by current one'
-    game_recom_lst = []
-    for i in range(len(simm_user_games_list)):
-        if simm_user_games_list[i] not in user_owned_games:
-            game_recommended = simm_user_games_list[i]
-            game_recom_lst.insert(0, game_recommended)
-            if len(game_recom_lst) == 5:
-                break
-    
-    if game_recommended == -1:
-        return {'No se encontro un juego para recomendar al usuario ' + user_id_to_recommend}
-
-    return {'Juego recomendado para el usuario ' + user_id_to_recommend + ': ' + str(game_recom_lst)}
