@@ -14,30 +14,6 @@ url = 'https://drive.google.com/file/d/1SzdSHfM4HmWx1GQL49BsqfUIbpqZ-m8m/view?us
 url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
 aust_user_item_df = pd.read_csv(url, sep = "|", encoding = "utf-8")
 
-# reviews_posts
-url = 'https://drive.google.com/file/d/1_iZTiQ5U4WywpJt9IsDSKDnq8gEFklyT/view?usp=sharing'
-url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
-reviews_posts = pd.read_csv(url, sep = "|", encoding = "utf-8")
-
-# game_info
-url = 'https://drive.google.com/file/d/1TYQw_uxeZWOoON8JsgHVVIo-j8ED4bce/view?usp=sharing'
-url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
-game_info = pd.read_csv(url, sep = "|", encoding = "utf-8")
-
-# games_cluser.csv
-url = 'https://drive.google.com/file/d/1JIVdDLEeXVaT6SoLoA1bQ-NMNl_Mk5SR/view?usp=sharing'
-url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
-games_cluster = pd.read_csv(url, sep = "|", encoding = "utf-8")
-
-# user_genre_mat_norm.csv
-url = 'https://drive.google.com/file/d/1eANB9sJFw1cueW-zmoQvdb_Zsf5-l7eb/view?usp=sharing'
-url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
-user_genre_mat_norm = pd.read_csv(url, sep = "|", encoding = "utf-8")
-
-# user_item_genre.csv
-url = 'https://drive.google.com/file/d/16awWTbiUHDAlnMEIucN5JjUqekO4NQN-/view?usp=sharing'
-url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
-user_item_genre = pd.read_csv(url, sep = "|", encoding = "utf-8")
 
 # filepath = "./Datasets/"
 # aust_user_item_df = pd.read_csv(filepath + "aust_user_item_df.csv", sep = "|", encoding = "utf-8")
