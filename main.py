@@ -7,10 +7,10 @@ import numpy as np
 # from sklearn.linear_model import LinearRegression
 # from sklearn.metrics import r2_score
 # from sklearn.metrics import mean_squared_error
-from sklearn.cluster import AgglomerativeClustering
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics.pairwise import euclidean_distances
+# from sklearn.cluster import AgglomerativeClustering
+# from sklearn.decomposition import PCA
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.metrics.pairwise import euclidean_distances
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 import string
@@ -269,7 +269,6 @@ def recomendacion_usuario(id_usuario: str):
     Given an user id, recommend a list of 5 games for this particular user
     """
 
-
     if id_usuario not in user_genre_mat_norm['user_id'].unique():
         return {'El usuario ingresado no se corresponde con uno activo en steam'}
 
@@ -288,7 +287,7 @@ def recomendacion_usuario(id_usuario: str):
 
     # calculate the distances of every user with the one entered.
     # choosen euclidean instead of cosine distances because later one works better when components derived from text analysis are being compared and here are purely numeric
-    distance_to_user = euclidean_distances(x, user_to_rec_features)
+    distance_to_user = np.linalg.norm(x - user_to_rec_features)
     # and make a dataframe with users distances to the current one
     final_df = pd.DataFrame(y, columns = ['user_id'])
     final_df['distance_to_curr_user'] = distance_to_user
