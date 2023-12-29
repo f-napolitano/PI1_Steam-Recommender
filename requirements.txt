@@ -2,7 +2,6 @@ fastapi
 pandas
 uvicorn
 numpy
-string
 ast
 random
 sklearn
