@@ -1,6 +1,3 @@
 fastapi
 pandas
 uvicorn
-numpy
-random
-sklearn
