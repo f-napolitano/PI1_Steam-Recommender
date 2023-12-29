@@ -9,11 +9,6 @@ import ast
 import random
 
 # ----------------------- Importing files from cloud --------------------------------------------------
-# aust_user_item_df
-url = 'https://drive.google.com/file/d/1SzdSHfM4HmWx1GQL49BsqfUIbpqZ-m8m/view?usp=sharing'
-url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
-aust_user_item_df = pd.read_csv(url, sep = "|", encoding = "utf-8")
-
 
 # filepath = "./Datasets/"
 # aust_user_item_df = pd.read_csv(filepath + "aust_user_item_df.csv", sep = "|", encoding = "utf-8")
