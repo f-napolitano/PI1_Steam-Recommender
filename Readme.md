@@ -137,7 +137,7 @@ each column a genre, cell values are computed as how much this
 particular user (row) has played a game with a particular genre (column)
 association by using the following equation:
 
-$${cell}_{i,j} = a_{i,j} {\sum\limits_{k = 1}^{N}{({{1 + {\alpha \ast {PTF}_{i,j,k}} + {\beta \ast {PT}}}2W_{i,j,k}})}}$$
+$$cell_{i,j} = a_{i,j} {\sum\limits_{k = 1}^{N}{(1 + {\alpha \ast PTF_{i,j,k}} + {\beta \ast PT2W_{i,j,k}})}}$$
 
 where $a_{i,j}$ is '1' if user *i* has any game with genre *j* or '0' if otherwise,
  ${PTF}_{i,j,k}$ is *Playtime_forever*, ${PT2W}_{i,j,k}$ is *Playtime_2weeks*
