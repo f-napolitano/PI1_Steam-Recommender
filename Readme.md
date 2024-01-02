@@ -144,8 +144,8 @@ where $a_{i,j}$ is '1' if user *i* has any game with genre *j* or '0' if otherwi
 values (accumulated hours played by user *i* on game *k* forever and over
 the lapse of last 2 weeks, respectively) on games that belongs to genre
 *j* and for each of the $N_i$ games owned by user *i*, lastly, $\alpha$ and $\beta$ are 
-weighting factors for lifetime and short term playing hours. A second matrix is
-created with normalized values. These matrices represent the "likeness"
+weighting factors for lifetime and short term playing hours, respectively. A second matrix is
+created with normalized values. These matrices represent the "likings"
 of each user for each game genre in a way of a 22-dimensional vector (since there are
 22 game's genres or features).
 
