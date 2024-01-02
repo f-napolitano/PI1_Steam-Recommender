@@ -137,13 +137,13 @@ each column a genre, cell values are computed as how much this
 particular user (row) has played a game with a particular genre (column)
 association by using the following equation:
 
-$$cell_{i,j} = a_{i,j} {\sum\limits_{k = 1}^{N}{(1 + {\alpha \ast PTF_{i,j,k}} + {\beta \ast PT2W_{i,j,k}})}}$$
+$$cell_{i,j} = a_{i,j} {\sum\limits_{k = 1}^{N_i}{(1 + {\alpha \ast PTF_{i,j,k}} + {\beta \ast PT2W_{i,j,k}})}}$$
 
 where $a_{i,j}$ is '1' if user *i* has any game with genre *j* or '0' if otherwise,
  $PTF_{i,j,k}$ is *Playtime_forever*, $PT2W_{i,j,k}$ is *Playtime_2weeks*
 values (accumulated hours played by user *i* on game *k* forever and over
 the lapse of last 2 weeks, respectively) on games that belongs to genre
-*j* and for each of the *N* games owned by user *i*, lastly, $\alpha$ and $\beta$ are 
+*j* and for each of the $N_i$ games owned by user *i*, lastly, $\alpha$ and $\beta$ are 
 weighting factors for lifetime and short term playing hours. A second matrix is
 created with normalized values. These matrices represent the "likeness"
 of each user for each game genre in a way of a 22-dimensional vector (since there are
